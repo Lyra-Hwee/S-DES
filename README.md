@@ -88,19 +88,31 @@ ASCII密文和密钥相同时，解密所得明文也相同
 我们的暴力破解函数：
 
 def find_valid_keys(self, pairs):
+
     valid_keys = []  # 用于存储有效密钥
+    
     for key_candidate in range(1024):  # 1024 = 2^10
+    
         key_bits = self.sdes.int_to_bits(key_candidate, 10)  # 将密钥转换为10位二进制列表
+        
         matches = True  # 假设密钥是有效的
         # 检查所有的明密文对
+        
         for plaintext, ciphertext in pairs:
+        
             encrypted_result = self.sdes.encrypt(plaintext, key_bits)
             # 如果任何一个加密结果不匹配，设置为 False
+            
             if encrypted_result != ciphertext:
+            
                 matches = False
+                
                 break
+                
         if matches:  # 如果所有明密文对都匹配
+        
             valid_keys.append(key_bits)  # 添加到有效密钥列表
+            
     return valid_keys
     
 我们的破解函数能找到一对明密文之间的所有可能密钥，例如：
@@ -129,30 +141,47 @@ ASCII解密：用户可以对ASCII字符进行解密。
 ## 5.使用说明
 ### 5.18位二进制数加密
 1.在主界面中点击二进制加解密，定位到“加密”按钮
+
 2.在提供的输入框中，输入10bit二进制密钥和8bit二进制明文
+
 3.点击下方加密按钮
+
 4.在下方，您会看到将该明文加密得到的密文结果
+
 5.可点击刷新按钮，重新输入
 ### 5.28位二进制数解密
 1.在主界面中点击二进制加解密，定位到“解密”按钮
+
 2.在提供的输入框中，输入10bit二进制密钥和8bit二进制密文
+
 3.点击下方解密按钮
+
 4.在下方，您会看到将该密文解密得到的明文结果
+
 5.可点击刷新按钮，重新输入
 ### 5.3ASCII加密
 1.在主界面中点击ASCII加解密，定位到“加密”按钮
+
 2.在提供的输入框中，输入10bit二进制密钥和ASCII明文
+
 3.点击下方加密按钮
+
 4.在下方，您会看到将该明文加密得到的密文结果
+
 5.可点击刷新按钮，重新输入
 ### 5.4ASCII解密
 1.在主界面中点击ASCII加解密，定位到“解密”按钮
+
 2.在提供的输入框中，输入10bit二进制密钥和ASCII密文
+
 3.点击下方解密按钮
+
 4.在下方，您会看到将该密文解密得到的明文结果
+
 5.可点击刷新按钮，重新输入
 ### 5.5暴力破解
 1.在主界面中点击暴力破解，输入明密文对
+
 2.得到可能的密钥和破解时间
 # 开发手册
 ## 1.引言
@@ -250,106 +279,194 @@ def open_brute_force(self):
 def open_new_window(self, app_class):
 
 ## 4.功能实现
-暴力破解
+### 暴力破解
 
 def find_valid_keys(self, pairs):
+
     valid_keys = []  # 用于存储有效密钥
+    
     for key_candidate in range(1024):  # 1024 = 2^10
+    
         key_bits = self.sdes.int_to_bits(key_candidate, 10)  # 将密钥转换为10位二进制列表
+        
         matches = True  # 假设密钥是有效的
         # 检查所有的明密文对
+        
         for plaintext, ciphertext in pairs:
+        
             encrypted_result = self.sdes.encrypt(plaintext, key_bits)
+            
             # 如果任何一个加密结果不匹配，设置为 False
+            
             if encrypted_result != ciphertext:
+            
                 matches = False
+                
                 break
+                
         if matches:  # 如果所有明密文对都匹配
+        
             valid_keys.append(key_bits)  # 添加到有效密钥列表
+            
     return valid_keys
 
-加解密算法实现
+### 加解密算法实现
 
 """根据给定的置换规则重新排列位"""
+
 def permute(self, bits, permutation):
+
     return [bits[i - 1] for i in permutation]  # 根据置换表返回重新排列的位
+    
 """根据给定的顺序进行左移操作"""
+
 def left_shift(self, bits, shifts):
+
     return [bits[i - 1] for i in shifts]  # 通过索引进行左移位
+    
 """扩展密钥，生成两个子密钥 K1 和 K2"""
+
 def key_expansion(self, key):
+
     # 使用 P10 置换密钥  
+    
     permuted_key = self.permute(key, self.P10)
+    
     left_part = permuted_key[:5]  # 密钥的左半部分
+    
     right_part = permuted_key[5:]  # 密钥的右半部分  
+    
     # 左移1位  
+    
     left_part_shifted1 = self.left_shift(left_part, self.LS1)
+    
     right_part_shifted1 = self.left_shift(right_part, self.LS1)
+    
     K1 = self.permute(left_part_shifted1 + right_part_shifted1, self.P8)  # 生成K1  
+    
     # 左移2位  
+    
     left_part_shifted2 = self.left_shift(left_part_shifted1, self.LS2)
+    
     right_part_shifted2 = self.left_shift(right_part_shifted1, self.LS2)
+    
     K2 = self.permute(left_part_shifted2 + right_part_shifted2, self.P8)  # 生成K2  
+    
     return K1, K2  # 返回两个子密钥  
+    
 """将二进制位数组转换为整数"""
+
 def bits_to_int(self, bits):
-    return int("".join(map(str, bits)), 2)  # 将位数组逐位拼成字符串并转换为整数  
+
+    return int("".join(map(str, bits)), 2)  # 将位数组逐位拼成字符串并转换为整数 
+
 """将整数转换为指定位数的二进制数组"""
+
 def int_to_bits(self, value, length):
-    return [int(bit) for bit in bin(value)[2:].zfill(length)]  # 转换为二进制并填充至指定长度  
+
+    return [int(bit) for bit in bin(value)[2:].zfill(length)]  # 转换为二进制并填充至指定长度 
+    
 """使用 S-Box 进行置换"""
+
 def s_box(self, bits, sbox):
+
     row = self.bits_to_int([bits[0], bits[3]])  # S-Box 行由第一个和最后一个二进制位确定  
+    
     col = self.bits_to_int([bits[1], bits[2]])  # S-Box 列由中间两个二进制位确定  
+    
     return self.int_to_bits(sbox[row][col], 2)  # 返回 S-Box 经过置换的结果（2位二进制）  
+    
 """轮函数 F"""
+
 def f_function(self, bits, subkey):
-    expanded_bits = self.permute(bits, self.EPBox)  # 扩展输入位  
+
+    expanded_bits = self.permute(bits, self.EPBox)  # 扩展输入位 
+    
     xor_result = [bit ^ key_bit for bit, key_bit in zip(expanded_bits, subkey)]  # 与子密钥进行异或操作  
+    
     left_sbox_result = self.s_box(xor_result[:4], self.SBox1)  # 对左半部进行 S-Box 置换  
-    right_sbox_result = self.s_box(xor_result[4:], self.SBox2)  # 对右半部进行 S-Box 置换  
+    
+    right_sbox_result = self.s_box(xor_result[4:], self.SBox2)  # 对右半部进行 S-Box 置换 
+    
     sbox_result = left_sbox_result + right_sbox_result  # 连接 S-Box 的结果  
+    
     return self.permute(sbox_result, self.P4)  # 最后进行 P4 置换后返回  
+    
 """加密函数"""
+
 def encrypt(self, plaintext, key):
+
     # 生成两个子密钥  
+    
     K1, K2 = self.key_expansion(key)
+    
     permuted_plaintext = self.permute(plaintext, self.IP)  # 进行初始置换  
+    
     left_part = permuted_plaintext[:4]  # 左半部分  
+    
     right_part = permuted_plaintext[4:]  # 右半部分  
+    
     # 第一轮  
+    
     f_output1 = self.f_function(right_part, K1)  # 调用 F 函数  
-    left_xor_f1 = [l_bit ^ f1_bit for l_bit, f1_bit in zip(left_part, f_output1)]  # 左半部与 F 输出进行异或  
+    
+    left_xor_f1 = [l_bit ^ f1_bit for l_bit, f1_bit in zip(left_part, f_output1)]  # 左半部与 F 输出进行异或
+    
     left_part, right_part = right_part, left_xor_f1  # 交换部分  
+    
     # 第二轮  
-    f_output2 = self.f_function(right_part, K2)  # 调用 F 函数  
-    left_xor_f2 = [l_bit ^ f2_bit for l_bit, f2_bit in zip(left_part, f_output2)]  # 左半部与 F 输出进行异或  
+    
+    f_output2 = self.f_function(right_part, K2)  # 调用 F 函数 
+    
+    left_xor_f2 = [l_bit ^ f2_bit for l_bit, f2_bit in zip(left_part, f_output2)]  # 左半部与 F 输出进行异或 
+    
     final_bits = left_xor_f2 + right_part  # 拼接成加密后的位  
+    
     return self.permute(final_bits, self.IP_inv)  # 进行逆初始置换，返回加密结果  
+    
 """解密函数"""
+
 def decrypt(self, ciphertext, key):
+
     # 生成两个子密钥
+    
     K1, K2 = self.key_expansion(key)
+    
     permuted_ciphertext = self.permute(ciphertext, self.IP)  # 进行初始置换  
+    
     left_part = permuted_ciphertext[:4]  # 左半部分  
+    
     right_part = permuted_ciphertext[4:]  # 右半部分  
+    
     # 第一轮（使用 K2）  
+    
     f_output1 = self.f_function(right_part, K2)  # 调用 F 函数  
+    
     left_xor_f1 = [l_bit ^ f1_bit for l_bit, f1_bit in zip(left_part, f_output1)]  # 左半部与 F 输出进行异或  
+    
     left_part, right_part = right_part, left_xor_f1  # 交换部分  
+    
     # 第二轮（使用 K1）  
+    
     f_output2 = self.f_function(right_part, K1)  # 调用 F 函数  
-    left_xor_f2 = [l_bit ^ f2_bit for l_bit, f2_bit in zip(left_part, f_output2)]  # 左半部与 F 输出进行异或  
+    
+    left_xor_f2 = [l_bit ^ f2_bit for l_bit, f2_bit in zip(left_part, f_output2)]  # 左半部与 F 输出进行异或 
+    
     final_bits = left_xor_f2 + right_part  # 拼接成解密后的位  
+    
     return self.permute(final_bits, self.IP_inv)  # 进行逆初始置换，返回解密结果  
     
 ## 5.性能优化
 1.可以考虑使用更高效的算法或数据结构来实现置换、S 盒替换等操作，以提高加密和解密的速度。
+
 2.对于暴力破解功能，可以考虑使用更优化的搜索算法，以减少破解时间。
 ## 6.安全考虑
 1.S-DES 是一种相对简单的加密算法，安全性有限。不建议在对安全性要求较高的场景中单独使用。
+
 2.在使用暴力破解功能时，应注意其计算复杂度可能较高，尤其是对于较长的明文和密文。
+
 3.虽然使用了加密算法，但在实际应用中，应注意保护密钥的安全，避免在网络传输中泄露。
+
 4.对于暴力破解功能，应考虑限制其使用频率，以防止恶意攻击。
 
 
