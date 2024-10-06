@@ -69,9 +69,15 @@ ASCII密文和密钥相同时，解密所得明文也相同
 ## 第三关：扩展功能
 对ASCII字符串进行加密
 
+密钥：1010101010
+明文：cat12345
+
 <img width="334" alt="图片14" src="https://github.com/user-attachments/assets/45d75d1e-ba49-4176-a810-30f35f1bfdf5">
 
 对ASCII字符串进行解密
+
+密文：sparking
+密钥：1111111111
 
 <img width="331" alt="图片15" src="https://github.com/user-attachments/assets/b200fbbe-06d2-48cd-aefb-80456dfd0440">
 
@@ -116,6 +122,8 @@ def find_valid_keys(self, pairs):
     return valid_keys
     
 我们的破解函数能找到一对明密文之间的所有可能密钥，例如：
+明文：10110011
+密文：11001100
 
 <img width="446" alt="图片18" src="https://github.com/user-attachments/assets/a03e8738-a806-4fd6-9401-e4283053069f">
 
