@@ -1,44 +1,58 @@
-<img width="337" alt="图片6" src="https://github.com/user-attachments/assets/81dc6059-8c1a-4727-b971-34ae1700b80c"><img width="337" alt="图片6" src="https://github.com/user-attachments/assets/bfebeddd-46b1-429b-b462-6600a0d1bc03"><img width="332" alt="图片5" src="https://github.com/user-attachments/assets/26cb01c5-56ff-4f5a-9ccd-0327e647a2c1">S-DES测试结果
+S-DES测试结果
 
 <img width="335" alt="图片1" src="https://github.com/user-attachments/assets/606704aa-5f06-48cc-a68b-95b19e20afa0">
 
 第一关：基本测试
 加密操作：
 输入10bit密钥和8bit明文
+
 <img width="331" alt="图片2" src="https://github.com/user-attachments/assets/8ab0368b-8945-47cd-a591-9ca8de172354">
 
 获取加密结果
+
 <img width="336" alt="图片3" src="https://github.com/user-attachments/assets/0d2cbd6a-5d79-4f5c-9b71-518994fad443">
 
 解密操作：
 输入10bit密钥和8bit密文
+
 <img width="335" alt="图片4" src="https://github.com/user-attachments/assets/67df9c6e-3a6e-48fc-8cad-b1bdfdea3ad7">
 
 获取解密结果
+
 <img width="332" alt="图片5" src="https://github.com/user-attachments/assets/d8fc229e-87cf-4643-8761-4572f836149a">
 
 第二关：交叉测试
 我们与黄涛组的同学进行了二进制和ASCII的加密解密交叉测试，得出结果如下
+
 二进制加密
+
 二进制明文和密钥相同时，加密所得密文也相同
+
 <img width="337" alt="图片6" src="https://github.com/user-attachments/assets/5dde3ec0-95f0-424a-8207-427a9d134082">
+
 ![图片7](https://github.com/user-attachments/assets/4c944aa3-ad79-4a2e-8226-bae401cd68f3)
 
 
 二进制解密
 二进制密文和密钥相同时，解密所得明文也相同
+
 <img width="329" alt="图片8" src="https://github.com/user-attachments/assets/aaff017a-08d0-4fa6-bbc5-7b49bf15912b">
+
 ![图片9](https://github.com/user-attachments/assets/42dd4d8b-9a96-4990-96a7-b4c10c793bed)
 
 
 ASCII加密
 ASCII明文和密钥相同时，加密所得密文也相同
+
 <img width="333" alt="图片10" src="https://github.com/user-attachments/assets/59a85911-4a5e-45b3-bea6-6c2a03b7b1ef">
 ![图片11](https://github.com/user-attachments/assets/c76b56d7-a993-496a-9b4f-b12fd8b06638)
+
+<img width="331" alt="图片12" src="https://github.com/user-attachments/assets/b01e163a-0933-4382-bc6e-ccadfec17539">
 
 
 ASCII解密
 ASCII密文和密钥相同时，解密所得明文也相同
+
 <img width="331" alt="图片12" src="https://github.com/user-attachments/assets/f805ee2f-1eb1-4ff9-a102-e21fab584175">
 ![图片13](https://github.com/user-attachments/assets/33c3aff9-999b-49b6-bc05-22bcf22fdce9)
 
@@ -46,16 +60,20 @@ ASCII密文和密钥相同时，解密所得明文也相同
 
 第三关：扩展功能
 对ASCII字符串进行加密
+
 <img width="334" alt="图片14" src="https://github.com/user-attachments/assets/45d75d1e-ba49-4176-a810-30f35f1bfdf5">
 
 对ASCII字符串进行解密
+
 <img width="331" alt="图片15" src="https://github.com/user-attachments/assets/b200fbbe-06d2-48cd-aefb-80456dfd0440">
 
 第四关：暴力破解
 输入明密文对
+
 <img width="443" alt="图片16" src="https://github.com/user-attachments/assets/85f1d25f-ac02-4cb7-8751-6599b5b3546e">
 
 开始破解
+
 <img width="446" alt="图片17" src="https://github.com/user-attachments/assets/df63a74e-ed7e-4b7c-8741-8843a48a525a">
 
 第五关：封闭测试
@@ -80,6 +98,7 @@ def find_valid_keys(self, pairs):
 
     return valid_keys
 我们的破解函数能找到一对明密文之间的所有可能密钥，例如：
+
 <img width="446" alt="图片18" src="https://github.com/user-attachments/assets/a03e8738-a806-4fd6-9401-e4283053069f">
 
 发现该明密文之间有四把不同的密钥，破解花费时间为0.0239秒
