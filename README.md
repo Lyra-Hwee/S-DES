@@ -1,10 +1,12 @@
-## S-DES测试结果
+# S-DES测试结果
 
 <img width="335" alt="图片1" src="https://github.com/user-attachments/assets/606704aa-5f06-48cc-a68b-95b19e20afa0">
 
-第一关：基本测试
+## 第一关：基本测试
 加密操作：
 输入10bit密钥和8bit明文
+密钥：1010101010
+明文：10101010S
 
 <img width="331" alt="图片2" src="https://github.com/user-attachments/assets/8ab0368b-8945-47cd-a591-9ca8de172354">
 
