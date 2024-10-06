@@ -5,6 +5,7 @@
 ## 第一关：基本测试
 加密操作：
 输入10bit密钥和8bit明文
+
 密钥：1010101010
 明文：10101010S
 
@@ -17,6 +18,8 @@
 解密操作：
 输入10bit密钥和8bit密文
 
+密钥：1010101010
+密文：10001111
 <img width="335" alt="图片4" src="https://github.com/user-attachments/assets/67df9c6e-3a6e-48fc-8cad-b1bdfdea3ad7">
 
 获取解密结果
