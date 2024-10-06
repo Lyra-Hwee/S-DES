@@ -86,12 +86,12 @@ ASCII密文和密钥相同时，解密所得明文也相同
 
 ## 第五关：封闭测试
 我们的暴力破解函数：
+
 def find_valid_keys(self, pairs):
     valid_keys = []  # 用于存储有效密钥
     for key_candidate in range(1024):  # 1024 = 2^10
         key_bits = self.sdes.int_to_bits(key_candidate, 10)  # 将密钥转换为10位二进制列表
         matches = True  # 假设密钥是有效的
-
         # 检查所有的明密文对
         for plaintext, ciphertext in pairs:
             encrypted_result = self.sdes.encrypt(plaintext, key_bits)
@@ -99,11 +99,10 @@ def find_valid_keys(self, pairs):
             if encrypted_result != ciphertext:
                 matches = False
                 break
-
         if matches:  # 如果所有明密文对都匹配
             valid_keys.append(key_bits)  # 添加到有效密钥列表
-
     return valid_keys
+    
 我们的破解函数能找到一对明密文之间的所有可能密钥，例如：
 
 <img width="446" alt="图片18" src="https://github.com/user-attachments/assets/a03e8738-a806-4fd6-9401-e4283053069f">
@@ -165,62 +164,91 @@ ASCII解密：用户可以对ASCII字符进行解密。
 ## 3.主要函数
 #初始化置换表和其他固定参数 
 def __init__(self):
+
 #根据给定的置换规则重新排列位
 def permute(self, bits, permutation):
+
 #根据给定的顺序进行左移操作
 def left_shift(self, bits, shifts):
+
 #扩展密钥，生成两个子密钥 K1 和 K2
 def key_expansion(self, key):
+
 #将二进制位数组转换为整数
 def bits_to_int(self, bits):
+
 #将整数转换为指定位数的二进制数组
 def int_to_bits(self, value, length):
+
 #使用 S-Box 进行置换
 def s_box(self, bits, sbox):
+
 #轮函数 F
 def f_function(self, bits, subkey):
+
 #加密函数
 def encrypt(self, plaintext, key):
+
 #解密函数
 def decrypt(self, ciphertext, key):
+
 #检查输入位是否合法（合法长度和位数）
 def is_valid_input(bits, expected_length):
+
 #加密页面的UI设置
 def setup_encrypt_tab(self)
+
 #解密页面的UI设置
 def setup_decrypt_tab(self):
+
 #处理加密按钮的操作
 def encrypt_action(self):
+
 #处理解密按钮的操作
 def decrypt_action(self):
+
 #清空加密页面的输入框和结果标签
 def clear_encrypt_fields(self):
+
 #清空解密页面的输入框和结果标签
 def clear_decrypt_fields(self):
+
 #找到有效密钥
 def find_valid_keys(self, pairs):
+
 #添加明文和密文对并开始暴力破解
 def add_pair(self):
+
 #显示错误提示消息框
-def show_error(self, message):  
+def show_error(self, message):
+
 #开始暴力破解
 def start_brute_force(self):
+
 #清空输入和结果。
 def clear_all(self):
+
 #加载并设置背景图像
 def setup_background(self):
+
 #设置主窗口的样式和按钮框
 def setup_window(self):
+
 #创建功能按钮
 def create_buttons(self):
+
 #打开加密和解密界面
 def open_encrypt_decrypt(self):
+
 #打开ASCII加解密界面
 def open_ascii_app(self):
+
 #打开暴力破解界面
 def open_brute_force(self):
+
 #打开新窗口并加载相应的应用程序
 def open_new_window(self, app_class):
+
 ## 4.功能实现
 暴力破解
 
